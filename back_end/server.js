@@ -9,13 +9,8 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(
-  cors({
-    origin: "*",
-  }),
-);
+app.use(cors({ origin: "*" }));
 app.use(express.json());
-
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", blogRoutes);
