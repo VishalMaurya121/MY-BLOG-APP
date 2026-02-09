@@ -69,13 +69,16 @@ const createUsers = async (req, res) => {
           email: checkForExistingUser.email,
           id: checkForExistingUser._id,
         });
-        const sendingEmail = await transporter.sendMail({
+        await transporter.sendMail({
           from: process.env.AUTH_USER,
           to: checkForExistingUser.email,
           subject: "Email Verification",
-          text: "Please verify your email",
-          html: `<h1>Click on the link to verify your email</h1>
-             <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">Verify Email</a>`,
+          html: `
+          <h1>Email Verification</h1>
+          <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">
+            Verify Email
+          </a>
+        `,
         });
         return res.status(200).json({
           success: true,
@@ -97,13 +100,16 @@ const createUsers = async (req, res) => {
       id: newUser._id,
     });
 
-    const sendingEmail = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.AUTH_USER,
-      to: email,
+      to: checkForExistingUser.email,
       subject: "Email Verification",
-      text: "Please verify your email",
-      html: `<h1>Click on the link to verify your email</h1>
-             <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">Verify Email</a>`,
+      html: `
+          <h1>Email Verification</h1>
+          <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">
+            Verify Email
+          </a>
+        `,
     });
     return res.status(200).json({
       success: true,
@@ -279,13 +285,16 @@ const logIn = async (req, res) => {
         id: checkForExistingUser._id,
       });
 
-      const sendingEmail = await transporter.sendMail({
+      await transporter.sendMail({
         from: process.env.AUTH_USER,
         to: checkForExistingUser.email,
         subject: "Email Verification",
-        text: "Please verify your email",
-        html: `<h1>Click on the link to verify your email</h1>
-             <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">Verify Email</a>`,
+        html: `
+          <h1>Email Verification</h1>
+          <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">
+            Verify Email
+          </a>
+        `,
       });
       return res.status(200).json({
         success: true,
