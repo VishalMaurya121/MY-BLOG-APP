@@ -29,96 +29,72 @@ admin.initializeApp({
 
 const createUsers = async (req, res) => {
   const { name, email, password } = req.body;
+
   try {
-    if (!name) {
+    // 🧪 Basic validations
+    if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: "User name is required🙂",
-      });
-    }
-    if (!email) {
-      return res.status(400).json({
-        success: false,
-        message: "Email is required🙂",
-      });
-    }
-    if (!password) {
-      return res.status(400).json({
-        success: false,
-        message: "Password is required🙂",
+        message: "Name, email and password are required 🙂",
       });
     }
 
-    const checkForExistingUser = await User.findOne({ email });
-    if (checkForExistingUser) {
-      if (checkForExistingUser.googleAuth) {
+    // 🔍 Check if user already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      // Google-auth user
+      if (existingUser.googleAuth) {
         return res.status(400).json({
           success: false,
           message:
-            "Already registered via google,login with google to continue",
+            "Already registered via Google. Please login with Google to continue.",
         });
       }
 
-      if (checkForExistingUser.verify) {
-        return res.status(400).json({
+      // Already verified
+      if (existingUser.verify) {
+        return res.status(409).json({
           success: false,
-          message: "This User Email is already registered😊",
-        });
-      } else {
-        let verificationToken = await generateJWT({
-          email: checkForExistingUser.email,
-          id: checkForExistingUser._id,
-        });
-        await transporter.sendMail({
-          from: process.env.AUTH_USER,
-          to: checkForExistingUser.email,
-          subject: "Email Verification",
-          html: `
-          <h1>Email Verification</h1>
-          <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">
-            Verify Email
-          </a>
-        `,
-        });
-        return res.status(200).json({
-          success: true,
-          message: "Please check your Email to verify 💁‍♂️",
+          message: "This email is already registered 😊",
         });
       }
+
+      // Not verified → resend verification email
+      await sendVerificationEmail(existingUser.email, existingUser._id);
+
+      return res.status(200).json({
+        success: true,
+        message: "Verification email resent. Please check your inbox 💁‍♂️",
+      });
     }
-    const hashedpass = await bcrypt.hash(password, 10);
-    const username = email.split("@")[0] + randomUUID();
+
+    // 🔐 Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 👤 Generate username
+    const username = `${email.split("@")[0]}_${randomUUID().slice(0, 6)}`;
+
+    // 🆕 Create new user
     const newUser = await User.create({
       name,
-      password: hashedpass,
       email,
+      password: hashedPassword,
       username,
     });
 
-    let verificationToken = await generateJWT({
-      email: newUser.email,
-      id: newUser._id,
-    });
+    // 📩 Send verification email
+    await sendVerificationEmail(newUser.email, newUser._id);
 
-    await transporter.sendMail({
-      from: process.env.AUTH_USER,
-      to: checkForExistingUser.email,
-      subject: "Email Verification",
-      html: `
-          <h1>Email Verification</h1>
-          <a href="${process.env.ORIGIN_URL}/verify-email/${verificationToken}">
-            Verify Email
-          </a>
-        `,
-    });
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      message: "Please check your Email to verify 💁‍♂️",
+      message: "Account created! Please verify your email 💁‍♂️",
     });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({
       success: false,
-      message: "something went wrong❎",
+      message: "Something went wrong ❎",
       error: error.message,
     });
   }
