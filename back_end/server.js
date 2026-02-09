@@ -10,12 +10,14 @@ require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 
 
-const corsOptions = {
-  origin: process.env.ORIGIN_URL,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};;
+app.use(
+  cors({
+    origin: "https://my-blog-app-five-alpha.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", blogRoutes);

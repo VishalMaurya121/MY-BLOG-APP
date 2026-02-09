@@ -30,17 +30,17 @@ const Home = () => {
           <div className="mt-8 flex justify-center gap-3">
             <Link to={`/search?q=Guides`}>
               <span className="px-3 py-1 bg-white text-sm rounded-full shadow-sm  hover:bg-gray-700 hover:text-white transition">
-                Guides 😊
+                Guides😊
               </span>
             </Link>
             <Link to={`/search?q=CaseStudies`}>
               <span className="px-3 py-1 bg-white text-sm rounded-full shadow-sm  hover:bg-gray-700 hover:text-white transition">
-                Case Studies 😊
+                Case Studies😊
               </span>
             </Link>
             <Link to={`/search?q=Resources`}>
               <span className="px-3 py-1 bg-white text-sm rounded-full shadow-sm  hover:bg-gray-700 hover:text-white transition">
-                Resources 😊
+                Resources😊
               </span>
             </Link>
           </div>

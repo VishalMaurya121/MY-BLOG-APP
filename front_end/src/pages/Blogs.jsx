@@ -118,9 +118,14 @@ export default function Blogs() {
 
             {/* Empty State */}
             {blogs?.length === 0 && (
-              <p className="text-2xl sm:text-3xl font-medium text-gray-800 text-center mt-6">
-                No blogs are present yet 😒
-              </p>
+              <>
+                <p className="text-2xl sm:text-3xl font-medium text-gray-800 text-center mt-6">
+                  Loading... 🙄🙄
+                </p>
+                <p className="text-2xl sm:text-3xl font-medium text-gray-800 text-center mt-6">
+                  No blogs are present yet 😏
+                </p>
+              </>
             )}
 
             {/* Load More */}
