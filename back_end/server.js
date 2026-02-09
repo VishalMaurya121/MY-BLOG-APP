@@ -14,12 +14,9 @@ const corsOptions = {
   origin: "https://my-blog-app-five-alpha.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: false, // IMPORTANT
 };
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
-
+app.use(cors(corsOptions)); // ✅ enough for CORS + preflight
 app.use(express.json());
 
 app.use("/api/v1", userRoutes);
@@ -30,3 +27,4 @@ app.listen(PORT, () => {
   connectDB();
   cloudinaryConfig();
 });
+   
