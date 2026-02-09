@@ -14,10 +14,9 @@ const corsOptions = {
   origin: "https://my-blog-app-five-alpha.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
+  credentials: false, // IMPORTANT
 };
 
-// ✅ SAME config everywhere
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
@@ -27,7 +26,7 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1", blogRoutes);
 
 app.listen(PORT, () => {
-  console.log(`server running...${PORT}`);
+  console.log(`server running on port ${PORT}`);
   connectDB();
   cloudinaryConfig();
 });
