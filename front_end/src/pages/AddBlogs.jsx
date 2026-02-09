@@ -126,7 +126,7 @@ const AddBlogs = () => {
 
     if (!isEditMode) {
       dispatch(removeSelectedBlog());
-    }
+    }  
 
     const timeoutId = setTimeout(() => {
       intializeEditorJS();

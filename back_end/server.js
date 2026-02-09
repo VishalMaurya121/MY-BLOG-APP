@@ -9,7 +9,14 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({origin: "https://my-blog-app-five-alpha.vercel.app", }));
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
+
 app.use(express.json());
 
 app.use("/api/v1", userRoutes);
@@ -19,4 +26,4 @@ app.listen(PORT, () => {
   console.log(`server running...${PORT}`);
   connectDB();
   cloudinaryConfig();
-}); 
+});
