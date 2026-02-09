@@ -9,16 +9,13 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(
-  cors({
-    origin: process.env.ORIGIN_URL,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
 
-app.use(express.json());
+const corsOptions = {
+  origin: process.env.ORIGIN_URL,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};;
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", blogRoutes);
