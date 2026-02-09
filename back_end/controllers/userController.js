@@ -27,6 +27,23 @@ admin.initializeApp({
   }),
 });
 
+const sendVerificationEmail = async (email, userId) => {
+  const token = await generateJWT({ email, id: userId });
+
+  await transporter.sendMail({
+    from: process.env.AUTH_USER,
+    to: email,
+    subject: "Email Verification",
+    html: `
+      <h1>Email Verification</h1>
+      <p>Please click the link below to verify your email:</p>
+      <a href="${process.env.ORIGIN_URL}/verify-email/${token}">
+        Verify Email
+      </a>
+    `,
+  });
+};
+
 const createUsers = async (req, res) => {
   const { name, email, password } = req.body;
 
