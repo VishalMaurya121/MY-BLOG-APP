@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 3000;
 app.use(
   cors({
     origin: "https://my-blog-app-five-alpha.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
