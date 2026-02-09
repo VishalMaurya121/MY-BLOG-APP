@@ -241,7 +241,7 @@ const searchBlogs = async (req, res) => {
       message: "Something went wrong in searching Blogs ❎",
       error: error.message,
     });
-  }
+  }    
 };
 
 module.exports = {
@@ -249,5 +249,5 @@ module.exports = {
   deleteComment,
   editComment,
   likeComment,
-  searchBlogs,
+  searchBlogs,     
 };

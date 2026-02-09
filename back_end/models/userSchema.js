@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       unique: true,
-    },
+    }, 
     password: String,
     blogs: [
       {
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    bio: {
+    bio: {    
       type: String,
       default: "",
       trim: true,

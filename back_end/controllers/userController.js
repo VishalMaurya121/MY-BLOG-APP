@@ -69,7 +69,7 @@ const createUsers = async (req, res) => {
           email: checkForExistingUser.email,
           id: checkForExistingUser._id,
         });
-        const sendingEmail = await transporter.sendMail({
+        const sendingEmail =  transporter.sendMail({
           from: process.env.AUTH_USER,
           to: checkForExistingUser.email,
           subject: "Email Verification",
@@ -97,7 +97,7 @@ const createUsers = async (req, res) => {
       id: newUser._id,
     });
 
-    const sendingEmail = await transporter.sendMail({
+    const sendingEmail =  transporter.sendMail({
       from: process.env.AUTH_USER,
       to: email,
       subject: "Email Verification",
@@ -113,7 +113,7 @@ const createUsers = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "something went wrong❎",
-      error: error.message,
+      error: error,
     });
   }
 };
@@ -279,7 +279,7 @@ const logIn = async (req, res) => {
         id: checkForExistingUser._id,
       });
 
-      const sendingEmail = await transporter.sendMail({
+      const sendingEmail =  transporter.sendMail({
         from: process.env.AUTH_USER,
         to: checkForExistingUser.email,
         subject: "Email Verification",
