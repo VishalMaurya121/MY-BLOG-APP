@@ -9,7 +9,17 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "https://my-blog-app-five-alpha.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+);
+
+// IMPORTANT: preflight
+app.options("*", cors());
 app.use(express.json());
 
 app.use("/api/v1", userRoutes);
