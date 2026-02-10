@@ -76,14 +76,11 @@ const createUsers = async (req, res) => {
           message: "This email is already registered 😊",
         });
       }
-      {
-        existingUser.verify = true;
-      }
-
+      
       // Not verified → resend verification email
       // await sendVerificationEmail(existingUser.email, existingUser._id);
 
-      /* return res.status(200).json({
+      /*  return res.status(200).json({
         success: true,
         message: "Verification email resent. Please check your inbox 💁‍♂️",
       }); */
@@ -277,6 +274,13 @@ const logIn = async (req, res) => {
     }
 
     if (!checkForExistingUser.verify) {
+      return res.status(400).json({
+        success: false,
+        message: "Please signup again😒",
+      });
+    }
+
+    /*  if (!checkForExistingUser.verify) {
       let verificationToken = await generateJWT({
         email: checkForExistingUser.email,
         id: checkForExistingUser._id,
@@ -297,7 +301,7 @@ const logIn = async (req, res) => {
         success: true,
         message: "Please check your Email to verify 💁‍♂️",
       });
-    }
+    } */
 
     let token = await generateJWT({
       email: checkForExistingUser.email,
