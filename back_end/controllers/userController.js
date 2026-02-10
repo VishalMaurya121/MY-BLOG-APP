@@ -76,14 +76,13 @@ const createUsers = async (req, res) => {
           message: "This email is already registered 😊",
         });
       }
-      
       // Not verified → resend verification email
       // await sendVerificationEmail(existingUser.email, existingUser._id);
 
-      /*  return res.status(200).json({
+       return res.status(200).json({
         success: true,
-        message: "Verification email resent. Please check your inbox 💁‍♂️",
-      }); */
+        message: "email verification failed",
+      });
     }
 
     // 🔐 Hash password
