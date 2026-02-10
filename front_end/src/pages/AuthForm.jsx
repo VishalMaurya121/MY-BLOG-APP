@@ -33,7 +33,7 @@ function AuthForm({ type }) {
         let msg = response.data.message;
         toast.success(msg);
         // console.log(msg);
-        if (msg == "Please check your Email to verify 💁‍♂️") {
+        if (msg == "Account created! Please SignIn  💁‍♂️") {
           navigate("/signin");
         } else {
           navigate("/");
@@ -155,7 +155,7 @@ function AuthForm({ type }) {
                 type="submit"
                 className={`flex w-full items-center justify-center gap-2 rounded-lg bg-gray-600 px-4 py-2.5 text-sm font-semibold  text-white cursor-pointer shadow-sm transition-all hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 active:scale-[0.99]`}
               >
-                {type == "signin" ? "Register" : "signup"}
+                {type == "signin" ? "signin" : "signup"}
               </button>
             </form>
 

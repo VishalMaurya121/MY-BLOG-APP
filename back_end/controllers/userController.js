@@ -76,14 +76,17 @@ const createUsers = async (req, res) => {
           message: "This email is already registered 😊",
         });
       }
+      {
+        existingUser.verify = true;
+      }
 
       // Not verified → resend verification email
-      await sendVerificationEmail(existingUser.email, existingUser._id);
+      // await sendVerificationEmail(existingUser.email, existingUser._id);
 
-      return res.status(200).json({
+      /* return res.status(200).json({
         success: true,
         message: "Verification email resent. Please check your inbox 💁‍♂️",
-      });
+      }); */
     }
 
     // 🔐 Hash password
@@ -98,14 +101,15 @@ const createUsers = async (req, res) => {
       email,
       password: hashedPassword,
       username,
+      verify: true,
     });
 
     // 📩 Send verification email
-    await sendVerificationEmail(newUser.email, newUser._id);
+    // await sendVerificationEmail(newUser.email, newUser._id);
 
     return res.status(201).json({
       success: true,
-      message: "Account created! Please verify your email 💁‍♂️",
+      message: "Account created! Please SignIn  💁‍♂️",
     });
   } catch (error) {
     console.error(error);
