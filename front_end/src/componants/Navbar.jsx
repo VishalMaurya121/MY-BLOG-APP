@@ -131,7 +131,7 @@ const Navbar = () => {
                     className="w-10 h-10 rounded-full object-cover"
                   />
                 </button>
- 
+
                 {profileOpen && (
                   <div className="absolute right-0 mt-2 w-44 bg-white rounded-md shadow-lg z-50 font-serif border">
                     <div className="flex items-center gap-3 px-3 py-2 border-b ">
@@ -216,16 +216,18 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {open && (
           <div className="md:hidden border-t font-serif">
-            {["/", "/blogs", "/about", "/add-blogs"].map((path, i) => (
-              <Link
-                key={i}
-                to={path}
-                onClick={() => setOpen(false)}
-                className="block px-3 py-2 hover:bg-gray-50"
-              >
-                {["Home", "Blogs", "About", "Add Blogs"][i]}
-              </Link>
-            ))}
+            {["/", "/blogs", "/about", "/add-blogs", `/@${username}`].map(
+              (path, i) => (
+                <Link
+                  key={i}
+                  to={path}
+                  onClick={() => setOpen(false)}
+                  className="block px-3 py-2 hover:bg-gray-50"
+                >
+                  {["Home", "Blogs", "About", "Add Blogs", "User Profile"][i]}
+                </Link>
+              ),
+            )}
 
             {token ? (
               <button
@@ -235,7 +237,7 @@ const Navbar = () => {
                 Sign out
               </button>
             ) : (
-              <div className="px-3 py-3 space-y-2">
+              <div className="px-3 py-4 space-y-2">
                 <Link to="/signin" className="block text-center">
                   Sign in
                 </Link>
