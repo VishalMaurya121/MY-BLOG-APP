@@ -15,6 +15,7 @@ const SearchBlog = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { tag } = useParams();
   const [blogs, setBlogs] = useState([]);
+  const [searching, setSearching] = useState(false);
   const q = searchParams.get("q");
 
   const query = tag ? { tag: tag.toLowerCase().replace(" ", "-") } : q;
@@ -22,6 +23,7 @@ const SearchBlog = () => {
   useEffect(() => {
     if (q) {
       async function SearchBlogs() {
+        setSearching(true);
         const params = { search: query, page, limit: 2 };
         try {
           const response = await axios.get(
@@ -37,11 +39,43 @@ const SearchBlog = () => {
           setBlogs([]);
           console.log(error);
           toast.error("error in searching the blogs");
+        } finally {
+          setSearching(false);
         }
       }
       SearchBlogs();
     }
   }, [q, page]);
+  if (searching)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-blue-50">
+        <div className="flex flex-col items-center space-y-4">
+          {/* Animated Blog Icon */}
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-gray-500 rounded-full animate-spin"></div>
+            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-gray-400 rounded-full animate-ping mx-auto mt-1"></div>
+            <div className="absolute -inset-1 bg-linear-to-r from-gray-500 to-gray-500 rounded-full blur-xl animate-pulse opacity-30"></div>
+          </div>
+
+          {/* Loading Text */}
+          <div className="space-y-2 text-center">
+            <h2 className="text-xl font-bold bg-linear-to-r from-gray-600 to-gray-400 bg-clip-text text-transparent animate-pulse">
+              Loading your blogs...
+            </h2>
+            <p className="text-sm text-gray-500 font-medium tracking-wide">
+              Just a moment ✨
+            </p>
+          </div>
+
+          {/* Dots Animation */}
+          <div className="flex space-x-1">
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.1s]"></div>
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.3s]"></div>
+          </div>
+        </div>
+      </div>
+    );
   return (
     <main className="min-h-screen bg-gray-50 py-12 font-serif ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
