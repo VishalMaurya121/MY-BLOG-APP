@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import instagramIcon from "../assets/instagram-icon.png";
 import facebookIcon from "../assets/facebook-icon.png";
 import githubIcon from "../assets/github-icon.png";
+import { Link } from "react-router-dom";
 
 export default function About() {
   return (
@@ -14,7 +15,9 @@ export default function About() {
             animate={{ opacity: 1, y: 0 }}
             className="uppercase tracking-widest text-sm font-semibold text-blue-600"
           >
-            About Coding Gallery:"The Code Creators 😎"
+            About Coding Gallery
+            <br />
+            "The Code Creators 😎"
           </motion.p>
 
           <motion.h1
@@ -135,14 +138,15 @@ export default function About() {
         <p className="text-blue-100 max-w-xl mx-auto mb-10 text-lg">
           Share what you learn. Help others grow. Build your developer voice.
         </p>
-
+         <Link to={"/Add-blogs"}>
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          className="bg-white text-blue-900 px-10 py-4 rounded-2xl font-bold text-lg shadow-xl"
+          className="bg-white text-blue-900 px-10 py-4 rounded-2xl font-bold text-lg shadow-xl cursor-pointer"
         >
           Get Started Free
         </motion.button>
+        </Link>
       </section>
     </main>
   );

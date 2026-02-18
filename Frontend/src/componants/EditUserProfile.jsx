@@ -7,7 +7,7 @@ import { login } from "../../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export const EditUserProfile = () => {
-  const {
+  const { 
     id,
     profilePic,
     name: reduxName,
@@ -22,7 +22,6 @@ export const EditUserProfile = () => {
   const [bio, setBio] = useState(reduxBio || "");
   const [imageFile, setImageFile] = useState(null);
   const [preview, setPreview] = useState(profilePic || null);
-
   const [isEnable, setEnable] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

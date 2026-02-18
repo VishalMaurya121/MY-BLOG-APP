@@ -145,7 +145,7 @@ const BlogPage = () => {
       navigate("/blogs");
     }
   }
-
+  
   if (!blogData)
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-blue-50">

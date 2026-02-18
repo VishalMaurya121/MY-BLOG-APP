@@ -22,7 +22,7 @@ const SearchBlog = () => {
   useEffect(() => {
     if (q) {
       async function SearchBlogs() {
-        const params = { search: query, page, limit: 1 };
+        const params = { search: query, page, limit: 2 };
         try {
           const response = await axios.get(
             `${import.meta.env.VITE_BACKEND_URL}/search-blogs?`,

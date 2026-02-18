@@ -16,11 +16,14 @@ export default function Blogs() {
   const [page, setPage] = useState(1);
   const [blogs, setBlogs] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const { id: userId } = useSelector((state) => state?.user || []);
   const recommandedTopics = blogs.map((tags) => tags.tags).flat();
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      setLoading(true);
       const params = { page, limit: 2 };
       try {
         const res = await axios.get(
@@ -31,10 +34,44 @@ export default function Blogs() {
         setHasMore(res.data.hasMore);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchBlogs();
   }, [page]);
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-50 to-blue-50">
+        <div className="flex flex-col items-center space-y-4">
+          {/* Animated Blog Icon */}
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-blue-200 border-t-gray-500 rounded-full animate-spin"></div>
+            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-gray-400 rounded-full animate-ping mx-auto mt-1"></div>
+            <div className="absolute -inset-1 bg-linear-to-r from-gray-500 to-gray-500 rounded-full blur-xl animate-pulse opacity-30"></div>
+          </div>
+
+          {/* Loading Text */}
+          <div className="space-y-2 text-center">
+            <h2 className="text-xl font-bold bg-linear-to-r from-gray-600 to-gray-400 bg-clip-text text-transparent animate-pulse">
+              Loading your blogs...
+            </h2>
+            <p className="text-sm text-gray-500 font-medium tracking-wide">
+              Just a moment ✨
+            </p>
+          </div>
+
+          {/* Dots Animation */}
+          <div className="flex space-x-1">
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.1s]"></div>
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.2s]"></div>
+            <div className="w-2 h-2 bg-gray-500 rounded-full animate-bounce [animation-delay:0.3s]"></div>
+          </div>
+        </div>
+      </div>
+    );
+
   return (
     <main className="min-h-screen bg-gray-50 py-8 sm:py-12 font-serif">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -120,10 +157,7 @@ export default function Blogs() {
             {blogs?.length === 0 && (
               <>
                 <p className="text-2xl sm:text-3xl font-medium text-gray-800 text-center mt-6">
-                  Loading... 🙄🙄
-                </p>
-                <p className="text-2xl sm:text-3xl font-medium text-gray-800 text-center mt-6">
-                  No blogs are present yet 😏
+                  No blogs are present yet 😒😒...
                 </p>
               </>
             )}
